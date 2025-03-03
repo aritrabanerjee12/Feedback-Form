@@ -1,0 +1,67 @@
+﻿<h1>User Login</h1>
+
+
+
+<form method="post">
+    User Name: <input type="text" name="uname" id="uname" />
+    <br />
+    Password: <input type="password" name="password" id="password" />
+    <br />
+    <input type="submit" value="Login" />
+
+   @* <input type="button" value="Say Hi" id="sayHi" onclick="incrementCount()" />*@
+    <input type="button" value="Say Hi" id="sayHi"/>
+
+    <br />
+    <span id="spn"></span>
+</form>
+
+@section Scripts
+    {
+    <script>
+        var count = 0;
+        function incrementCount() {
+            count++;
+            // alert("Hello, everyone, click count = " + count);
+
+            //document.getElementById('spn').innerHTML = "Hello, everyone, click count = " + count
+            $('#spn').html("Hello, everyone, click count = " + count);
+            if (count == 5) {
+                var sayHi = document.getElementById("sayHi")
+                sayHi.disabled = true;
+            }
+        }
+
+
+        //Registration code
+        //ready is a page event.
+        $(document).ready(function() {
+            alert('page fully loaded!!');
+
+            $('#sayHi').click(function() {
+                //alert('You clicked the Say Hi button');
+                count++;
+                // alert("Hello, everyone, click count = " + count);
+
+                //document.getElementById('spn').innerHTML = "Hello, everyone, click count = " + count
+                $('#spn').html("Hello, everyone, click count = " + count);
+                if (count == 5) {
+                    var sayHi = document.getElementById("sayHi")
+                    sayHi.disabled = true;
+                }
+            });
+
+
+            //document.getElementById('sayHi').addEventListener('click', function() {
+            //    alert('You clicked the Say Hi button');
+            //});
+
+
+            $('#sayHello').click(function() {
+                alert('You clicked the Say Hi button');
+            });
+        });
+    </script>
+}
+
+

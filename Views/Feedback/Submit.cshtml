@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Submit";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+    .feedback-form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        margin: auto;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .feedback-form h2 {
+        text-align: center;
+    }
+    .feedback-form label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    .feedback-form input, .feedback-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .feedback-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .feedback-form button:hover {
+        background-color: #218838;
+    }
+    .rating {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .rating input {
+        display: none;
+    }
+    .rating label {
+        font-size: 30px;
+        color: #ccc;
+        cursor: pointer;
+    }
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+        color: #ffc107;
+    }
+</style>
+
+
+
+<div class="feedback-form">
+    <h2>Feedback Form</h2>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="feedback">Your Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4" required></textarea>
+
+        <label for="rating">Rate Us:</label>
+        <div class="rating">
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">&#9733;</label>
+
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">&#9733;</label>
+
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">&#9733;</label>
+
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">&#9733;</label>
+
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">&#9733;</label>
+        </div>
+
+        <input type="button" value="Submit Feedback" id="submitFeedbackBtn">
+    </form>
+</div>
+
+
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function() {
+           // alert('hiiii');
+            // Handle form submission
+            $('#submitFeedbackBtn').on('click', function(event) {
+                //event.preventDefault(); // Prevent the default form submission
+
+                // Gather form data
+                var feedbackData = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    feedbackMessage: $('#feedback').val(),
+                    rating: $('input[name="rating"]:checked').val()
+                };
+
+                // AJAX request to submit the form data
+                $.ajax({
+                    url: '/api/feedback', // Your API endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(feedbackData), // Convert data to JSON string
+                    success: function(response) {
+                        debugger;
+                        alert(response.message+ "\nDocket: " + response.docketNumber);
+                        // Optionally clear the form
+                        $('form')[0].reset();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Failed to submit feedback: ' + textStatus);
+                    }
+                });
+            });
+        });
+    </script>
+}
